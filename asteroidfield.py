@@ -49,3 +49,15 @@ class AsteroidField(pygame.sprite.Sprite):
             position = edge[1](random.uniform(0, 1))
             kind = random.randint(1, ASTEROID_KINDS)
             self.spawn(ASTEROID_MIN_RADIUS * kind, position, velocity)
+
+    def split(self, asteroid):
+        self.kill()
+        if asteroid.radius <= ASTEROID_MIN_RADIUS:
+            return
+        else:
+            spawn_angle = random.uniform(20,50)
+            new1_angle = asteroid.velocity.rotate(spawn_angle)
+            new2_angle = asteroid.velocity.rotate(-spawn_angle)
+            asteroid.radius -= ASTEROID_MIN_RADIUS
+            new1 = asteroid.spawn(asteroid.radius,asteroid.position,asteroid.new1_angle)
+            new2 = asteroid.spawn(asteroid.radius,asteroid.position,asteroid.new2_angle*1.2)
